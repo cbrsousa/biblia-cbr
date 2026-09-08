@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BibliaAI Studio CBR - Palavra & Restauração</title>
+  
+  <!-- PWA Metadata -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BibliaAI CBR">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+
+  <!-- Fontes Nobres -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Left Sidebar (Desktop / Tablet) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-box">
+          <span style="font-size: 22px;">✝️</span>
+        </div>
+        <div class="header-text">
+          <h2>BibliaAI CBR</h2>
+          <span class="badge-tag">BATISTA DA RESTAURAÇÃO</span>
+        </div>
+      </div>
+
+      <button id="btnNewChat" class="btn-new-chat">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        Novo Estudo
+      </button>
+
+      <div class="chat-history-section">
+        <div class="section-title-row">
+          <span class="section-title">Histórico de Estudos</span>
+          <button id="btnClearAllChatsTop" class="btn-clear-history" title="Limpar Todo o Histórico">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            Limpar
+          </button>
+        </div>
+        <div id="chatHistoryList" class="history-list">
+          <!-- Histórico Dinâmico -->
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="status-indicator">
+          <span class="status-dot online"></span>
+          <span>Nuvem Ativa</span>
+        </div>
+        <div class="footer-actions">
+          <button id="btnOpenSettings" class="btn-icon" title="Chaves e Configurações">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <main class="chat-workspace">
+      <!-- Top Control Bar -->
+      <header class="chat-header">
+        <div class="controls-left">
+          <button id="btnToggleMobileSidebar" class="btn-icon mobile-only" title="Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+
+          <div class="control-group">
+            <label for="selectMode">Ministério / Modo:</label>
+            <select id="selectMode" class="custom-select">
+              <option value="estudo_biblico" selected>📖 Estudo & Exegese Bíblica</option>
+              <option value="esboco_pregacao">🎙️ Esboços de Pregação & Sermões</option>
+              <option value="aconselhamento_pastoral">🕊️ Aconselhamento & Devocional</option>
+              <option value="duvidas_teologicas">❓ Dúvidas Teológicas & Doutrina</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="controls-right">
+          <button id="btnToggleThink" class="btn-toggle-think" title="Ativar Raciocínio Exegético Profundo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/></svg>
+            <span class="think-label">Raciocínio Exegético</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Chat Messages Container -->
+      <div id="chatMessages" class="messages-container">
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="welcome-screen">
+          <div class="welcome-icon">✝️</div>
+          <h1>BibliaAI Studio CBR</h1>
+          <p>Estúdio Bíblico Inteligente · Comunidade Batista da Restauração · Fundamentado na Palavra Viva de Deus.</p>
+
+          <div class="suggestions-grid">
+            <div class="suggestion-card" data-prompt="Elabore um esboço de sermão expositivo sobre a Parábola do Filho Pródigo (Lucas 15), com foco na Restauração da Identidade e da Família pelo amor do Pai.">
+              <span class="card-icon">🎙️</span>
+              <h4>Esboço de Pregação</h4>
+              <p>Restauração familiar e perdão em Lucas 15</p>
+            </div>
+            <div class="suggestion-card" data-prompt="Faça um estudo exegético e histórico detalhado de Romanos 8:1-4 sobre a liberdade em Cristo Jesus e a vida no Espírito.">
+              <span class="card-icon">📖</span>
+              <h4>Estudo em Romanos 8</h4>
+              <p>Nenhuma condenação há para os que estão em Cristo</p>
+            </div>
+            <div class="suggestion-card" data-prompt="Escreva uma mensagem devocional de consolo e fortalecimento para quem está passando por uma crise de ansiedade ou enfermidade na alma.">
+              <span class="card-icon">🕊️</span>
+              <h4>Devocional de Restauração</h4>
+              <p>Paz de Deus e esperança para momentos difíceis</p>
+            </div>
+            <div class="suggestion-card" data-prompt="Explique a doutrina batista bíblica do sacerdócio universal de todos os crentes e a autoridade soberana das Escrituras.">
+              <span class="card-icon">⛪</span>
+              <h4>Doutrina & Teologia</h4>
+              <p>Princípios históricos e bíblicos batistas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Chat Input Bar -->
+      <footer class="chat-input-wrapper">
+        <!-- Quick Access Chips Bar -->
+        <div class="quick-chips-bar">
+          <span class="chips-label">Atalhos:</span>
+          <div class="quick-chips">
+            <button class="chip-btn active" data-mode="estudo_biblico">📖 Estudo Bíblico</button>
+            <button class="chip-btn" data-mode="esboco_pregacao">🎙️ Esboço de Sermão</button>
+            <button class="chip-btn" data-mode="aconselhamento_pastoral">🕊️ Devocional Pastoral</button>
+            <button class="chip-btn" data-mode="duvidas_teologicas">❓ Dúvida Teológica</button>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <textarea id="userInput" placeholder="Digite uma passagem bíblica, tema de pregação ou dúvida teológica... (Shift+Enter para nova linha)" rows="1"></textarea>
+
+          <div class="input-actions">
+            <button id="btnStopStream" class="btn-icon stop-btn hidden" title="Interromper">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>
+            </button>
+            <button id="btnSendMessage" class="btn-send" title="Enviar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Configurações de Acesso</h3>
+        <button id="btnCloseSettings" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          O aplicativo já vem pré-ativado com conexão direta e gratuita à LPU Groq (~465 tokens/s) para a igreja.
+        </p>
+
+        <div class="form-group">
+          <label>Chave de Acesso Groq (Padrão Ativo):</label>
+          <input type="password" id="inputGroqKey" class="custom-input" placeholder="gsk_...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnSaveSettings" class="btn-primary">Salvar e Conectar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
