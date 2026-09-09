@@ -18,7 +18,8 @@ DIRETRIZES:
 2. Cristocentrismo: toda a Escritura converge para Jesus Cristo, Sua graça e redenção vicária.
 3. Teologia da Restauração: ênfase na redenção integral (espírito, alma e corpo), cura interior, restauração familiar e vida no Espírito.
 4. Explique o contexto histórico, termos em hebraico/grego quando relevante e aplicação prática.
-5. Seja reverente, bíblico e sempre cite livros, capítulos e versículos.`,
+5. Seja reverente, bíblico e sempre cite livros, capítulos e versículos.
+6. Responda diretamente em português do Brasil com clareza e unção, sem preâmbulos técnicos ou raciocínios internos.`,
 
   esboco_pregacao: `Você é o conselheiro de homilética pastoral do BibliaAI Studio CBR.
 Ajude pastores, líderes de células e pregadores a estruturar sermões bíblicos impactantes.
@@ -28,14 +29,17 @@ ESTRUTURA:
 - INTRODUÇÃO
 - PONTOS PRINCIPAIS (3 pontos claros com ilustrações)
 - APLICAÇÃO PASTORAL
-- CONCLUSÃO & APELO (oração de fé, restauração e cura).`,
+- CONCLUSÃO & APELO (oração de fé, restauração e cura).
+Responda diretamente em português do Brasil com clareza e autoridade bíblica.`,
 
   aconselhamento_pastoral: `Você é o conselheiro pastoral e devocional do BibliaAI Studio CBR.
 Traga conforto, paz, esperança e edificação baseado nas promessas da Palavra de Deus.
-Fale com amor pastoral, mansidão e finalize sempre com uma oração edificante.`,
+Fale com amor pastoral, mansidão e finalize sempre com uma oração edificante.
+Responda diretamente em português do Brasil.`,
 
   duvidas_teologicas: `Você é o consultor teológico do BibliaAI Studio CBR.
-Responda dúvidas doutrinárias e exegéticas difíceis com fidelidade bíblica, clareza e alinhamento à fé batista restauracionista.`
+Responda dúvidas doutrinárias e exegéticas com fidelidade bíblica, clareza e alinhamento à fé batista restauracionista.
+Responda diretamente em português do Brasil.`
 };
 
 const DOM = {
@@ -89,10 +93,12 @@ DOM.selectMode.addEventListener("change", () => {
   });
 });
 
-DOM.btnToggleThink.addEventListener("click", () => {
-  state.deepThink = !state.deepThink;
-  DOM.btnToggleThink.classList.toggle("active", state.deepThink);
-});
+if (DOM.btnToggleThink) {
+  DOM.btnToggleThink.addEventListener("click", () => {
+    state.deepThink = !state.deepThink;
+    DOM.btnToggleThink.classList.toggle("active", state.deepThink);
+  });
+}
 
 DOM.userInput.addEventListener("input", function() {
   this.style.height = "auto";
@@ -131,7 +137,7 @@ async function sendMessage() {
   DOM.userInput.value = "";
   DOM.userInput.style.height = "auto";
 
-  const { row, contentDiv, thinkDiv } = createAssistantMessageBubble();
+  const { row, contentDiv } = createAssistantMessageBubble();
   DOM.chatMessages.appendChild(row);
   scrollToBottom();
 
@@ -144,9 +150,7 @@ async function sendMessage() {
   try {
     const mode = DOM.selectMode.value;
     const baseSystem = SYSTEM_PROMPTS[mode] || SYSTEM_PROMPTS.estudo_biblico;
-    const systemPrompt = state.deepThink
-      ? `${baseSystem}\n\n[INSTRUÇÃO EXEGÉTICA]: Inicie detalhando seu raciocínio teológico passo a passo dentro das tags <think>...</think>, e depois entregue a mensagem definitiva fora da tag.`
-      : baseSystem;
+    const systemPrompt = `${baseSystem}\n\nIMPORTANTE: Responda diretamente ao usuário com a mensagem final em português. Nunca exponha tags, raciocínio interno ou notas prévias.`;
 
     const payload = {
       model: "openai/gpt-oss-120b",
@@ -177,9 +181,9 @@ async function sendMessage() {
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
     let fullResponseText = "";
-    let rawThinkingText = "";
     let buffer = "";
     let isFirstToken = true;
+    let inThinkTag = false;
 
     while (true) {
       const { done, value } = await reader.read();
@@ -198,31 +202,33 @@ async function sendMessage() {
             const data = JSON.parse(raw);
             const delta = data.choices?.[0]?.delta;
 
+            // Ignora qualquer raciocínio interno ou tokens preparatórios
             if (delta?.reasoning) {
-              if (isFirstToken) { contentDiv.innerHTML = ""; isFirstToken = false; }
-              rawThinkingText += delta.reasoning;
-              thinkDiv.classList.remove("hidden");
-              thinkDiv.querySelector(".thinking-content").textContent = rawThinkingText;
+              continue;
             }
 
             if (delta?.content) {
-              if (isFirstToken) { contentDiv.innerHTML = ""; isFirstToken = false; }
-              const token = delta.content;
+              let token = delta.content;
 
               if (token.includes("<think>")) {
+                inThinkTag = true;
                 const parts = token.split("<think>");
-                if (parts[1]) rawThinkingText += parts[1];
-                thinkDiv.classList.remove("hidden");
-                thinkDiv.querySelector(".thinking-content").textContent = rawThinkingText;
+                token = parts[0];
+              }
+
+              if (token.includes("</think>")) {
+                inThinkTag = false;
+                const parts = token.split("</think>");
+                token = parts[1] || "";
+              }
+
+              if (inThinkTag || !token) {
                 continue;
               }
-              if (token.includes("</think>")) {
-                const parts = token.split("</think>");
-                if (parts[0]) rawThinkingText += parts[0];
-                if (parts[1]) fullResponseText += parts[1];
-                thinkDiv.querySelector(".thinking-content").textContent = rawThinkingText;
-                contentDiv.innerHTML = renderMarkdown(fullResponseText);
-                continue;
+
+              if (isFirstToken) {
+                contentDiv.innerHTML = "";
+                isFirstToken = false;
               }
 
               fullResponseText += token;
@@ -281,23 +287,15 @@ function createAssistantMessageBubble() {
   const bubble = document.createElement("div");
   bubble.className = "message-bubble";
 
-  const thinkDiv = document.createElement("div");
-  thinkDiv.className = "thinking-box hidden";
-  thinkDiv.innerHTML = `
-    <div class="thinking-title">💡 Raciocínio Exegético</div>
-    <div class="thinking-content"></div>
-  `;
-
   const contentDiv = document.createElement("div");
   contentDiv.className = "message-content";
   contentDiv.innerHTML = `<div class="waiting-hint"><span class="pulse-dot"></span> Consultando as Escrituras Sagradas...</div>`;
 
-  bubble.appendChild(thinkDiv);
   bubble.appendChild(contentDiv);
   row.appendChild(avatar);
   row.appendChild(bubble);
 
-  return { row, bubble, contentDiv, thinkDiv };
+  return { row, bubble, contentDiv };
 }
 
 function renderMarkdown(text) {
