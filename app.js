@@ -85,10 +85,12 @@ const DOM = {
 
 marked.setOptions({ breaks: true, gfm: true });
 
-// Service Worker Registration for PWA
+// Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+    navigator.serviceWorker.register("./sw.js?v=3").then((reg) => {
+      reg.update();
+    }).catch(() => {});
   });
 }
 
@@ -320,9 +322,21 @@ function createAssistantMessageBubble() {
 }
 
 function renderMarkdown(text) {
-  const rawHtml = marked.parse(text);
+  if (!text) return "";
+  // Higieniza qualquer resquício de tags de pensamento ou instrução interna
+  const cleanText = text
+    .replace(/<think>[\s\S]*?<\/think>/gi, "")
+    .replace(/<think>[\s\S]*/gi, "")
+    .replace(/💡\s*RACIOCÍNIO EXEGÉTICO[\s\S]*?(\n\n|$)/gi, "")
+    .replace(/\[INSTRUÇÃO EXEGÉTICA\][\s\S]*?(\n\n|$)/gi, "")
+    .trim();
+
+  const rawHtml = marked.parse(cleanText);
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = rawHtml;
+
+  // Remove qualquer elemento com classe de thinking
+  tempDiv.querySelectorAll(".thinking-box, .thinking-title, .thinking-content").forEach(el => el.remove());
 
   tempDiv.querySelectorAll("pre").forEach(pre => {
     const header = document.createElement("div");
@@ -350,6 +364,21 @@ function loadSavedChats() {
   if (saved) {
     try {
       state.chats = JSON.parse(saved);
+      // Limpa qualquer mensagem antiga salva no navegador
+      state.chats.forEach(chat => {
+        if (Array.isArray(chat.messages)) {
+          chat.messages.forEach(msg => {
+            if (msg.role === "assistant" && typeof msg.content === "string") {
+              msg.content = msg.content
+                .replace(/<think>[\s\S]*?<\/think>/gi, "")
+                .replace(/<think>[\s\S]*/gi, "")
+                .replace(/💡\s*RACIOCÍNIO EXEGÉTICO[\s\S]*?(\n\n|$)/gi, "")
+                .trim();
+            }
+          });
+        }
+      });
+      saveChats();
       renderChatHistory();
     } catch (e) {}
   }

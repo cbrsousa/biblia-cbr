@@ -579,28 +579,21 @@ body {
   order: 1;
 }
 
-/* Raciocínio Exegético Box (Oculto - Apenas resposta direta) */
-.thinking-box {
+/* Raciocínio Exegético Box (Removido - Exibição 100% direta) */
+.thinking-box,
+.thinking-title,
+.thinking-content,
+.btn-toggle-think,
+.think-label {
   display: none !important;
-}
-
-.thinking-title {
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 6px;
-  font-size: 11.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
-
-.thinking-content {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  white-space: pre-wrap;
-  color: #fef08a;
-  line-height: 1.6;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
 }
 
 /* Tipografia Bíblica & Markdown */
