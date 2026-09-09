@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    BIBLIA-AI STUDIO CBR - TEMA SOLENE, SAGRADO E PROFISSIONAL
    Cores: Azul Noturno Imperial, Ouro Bíblico, Marfim e Pergaminho
    ============================================================ */
@@ -74,7 +74,7 @@ body {
 }
 
 .logo-box {
-  background: linear-gradient(135deg, #d4af37, #996515);
+  background: #ffffff;
   width: 44px;
   height: 44px;
   border-radius: 12px;
@@ -82,7 +82,32 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 14px var(--accent-gold-glow);
-  border: 1px solid #f6d878;
+  border: 1px solid var(--accent-gold);
+  overflow: hidden;
+  padding: 3px;
+}
+
+.cbr-logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.welcome-logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.welcome-cbr-logo {
+  max-width: 130px;
+  max-height: 130px;
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 16px;
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.35);
+  object-fit: contain;
 }
 
 .header-text h2 {
@@ -506,9 +531,9 @@ body {
 }
 
 .message-row.assistant .avatar {
-  background: linear-gradient(135deg, #d4af37, #996515);
-  color: #0a0d14;
-  border: 1px solid #f6d878;
+  background: #ffffff;
+  border: 1px solid var(--accent-gold);
+  padding: 4px;
 }
 
 .message-row.user .avatar {

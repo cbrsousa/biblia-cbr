@@ -1,4 +1,4 @@
-﻿// BibliaAI Studio CBR - Progressive Web App (GitHub Pages Ready)
+// BibliaAI Studio CBR - Progressive Web App (GitHub Pages Ready)
 const DEFAULT_KEY = ['gsk_slTATtWu', 'JWVP5I9hrsjfWGdyb3', 'FYR289PWMymIGlpSiwpbZkIyJi'].join('');
 
 const state = {
@@ -275,8 +275,8 @@ function createAssistantMessageBubble() {
   row.className = "message-row assistant";
 
   const avatar = document.createElement("div");
-  avatar.className = "avatar";
-  avatar.textContent = "✝️";
+  avatar.className = "avatar assistant-cbr-avatar";
+  avatar.innerHTML = `<img src="logo_cbr.png" alt="CBR" style="width: 28px; height: 28px; object-fit: contain;">`;
 
   const bubble = document.createElement("div");
   bubble.className = "message-bubble";
