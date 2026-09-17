@@ -89,7 +89,7 @@ marked.setOptions({ breaks: true, gfm: true });
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=8").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=10").then((reg) => {
       reg.update();
     }).catch(() => {});
   });
@@ -274,7 +274,11 @@ async function sendMessage() {
 
     currentChat.messages.push({ role: "assistant", content: fullResponseText });
     saveChats();
-    attachMessageActions(bubble, fullResponseText);
+    try {
+      attachMessageActions(bubble, fullResponseText);
+    } catch (actErr) {
+      console.warn("Aviso acoes:", actErr);
+    }
   } catch (err) {
     if (err.name === "AbortError") {
       contentDiv.innerHTML += "<br><em>[Estudo interrompido]</em>";
@@ -370,34 +374,44 @@ function renderMarkdown(text) {
 }
 
 function attachMessageActions(bubble, text) {
-  if (!bubble || bubble.querySelector(".message-actions-bar")) return;
-  const bar = document.createElement("div");
-  bar.className = "message-actions-bar";
+  try {
+    if (!bubble && DOM.chatMessages) {
+      const allBubbles = DOM.chatMessages.querySelectorAll(".message-row.assistant .message-bubble");
+      if (allBubbles.length > 0) {
+        bubble = allBubbles[allBubbles.length - 1];
+      }
+    }
+    if (!bubble || bubble.querySelector(".message-actions-bar")) return;
+    const bar = document.createElement("div");
+    bar.className = "message-actions-bar";
 
-  const btnCopy = document.createElement("button");
-  btnCopy.className = "btn-bubble-action btn-bubble-copy";
-  btnCopy.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar Estudo`;
-  btnCopy.onclick = () => {
-    navigator.clipboard.writeText(text).then(() => {
-      btnCopy.innerHTML = `✅ Copiado!`;
-      setTimeout(() => {
-        btnCopy.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar Estudo`;
-      }, 2200);
-    });
-  };
+    const btnCopy = document.createElement("button");
+    btnCopy.className = "btn-bubble-action btn-bubble-copy";
+    btnCopy.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar Estudo`;
+    btnCopy.onclick = () => {
+      navigator.clipboard.writeText(text).then(() => {
+        btnCopy.innerHTML = `✅ Copiado!`;
+        setTimeout(() => {
+          btnCopy.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar Estudo`;
+        }, 2200);
+      }).catch(() => {});
+    };
 
-  const btnWa = document.createElement("button");
-  btnWa.className = "btn-bubble-action btn-bubble-whatsapp";
-  btnWa.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.771.815 2.796.815 3.182 0 5.768-2.586 5.768-5.766 0-3.18-2.586-5.761-5.768-5.761zm3.376 8.204c-.144.405-.837.774-1.17.824-.312.046-.713.064-2.288-.587-1.782-.738-2.92-2.548-3.008-2.666-.089-.118-.724-.962-.724-1.835 0-.873.456-1.302.619-1.478.163-.177.356-.222.474-.222.119 0 .237.001.341.006.109.006.257-.042.401.305.148.356.505 1.233.549 1.322.044.089.074.193.015.312-.059.119-.089.193-.178.297-.089.104-.187.233-.267.312-.089.089-.182.185-.078.363.104.178.462.763.992 1.235.683.608 1.258.796 1.436.885.178.089.282.074.386-.044.104-.119.445-.519.564-.697.119-.178.237-.148.396-.089.159.059 1.008.475 1.181.562.173.087.288.131.332.205.044.074.044.43-.1 1.035z"/></svg> Enviar WhatsApp`;
-  btnWa.onclick = () => {
-    const preview = text.length > 900 ? text.slice(0, 900) + "\n\n(...continua no site)" : text;
-    const msg = `📖 *BibliaAI Studio CBR - Palavra & Restauração*\n\n${preview}\n\n👉 Acesse o estudo completo: https://cbrsousa.github.io/biblia-cbr/`;
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
-  };
+    const btnWa = document.createElement("button");
+    btnWa.className = "btn-bubble-action btn-bubble-whatsapp";
+    btnWa.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.771.815 2.796.815 3.182 0 5.768-2.586 5.768-5.766 0-3.18-2.586-5.761-5.768-5.761zm3.376 8.204c-.144.405-.837.774-1.17.824-.312.046-.713.064-2.288-.587-1.782-.738-2.92-2.548-3.008-2.666-.089-.118-.724-.962-.724-1.835 0-.873.456-1.302.619-1.478.163-.177.356-.222.474-.222.119 0 .237.001.341.006.109.006.257-.042.401.305.148.356.505 1.233.549 1.322.044.089.074.193.015.312-.059.119-.089.193-.178.297-.089.104-.187.233-.267.312-.089.089-.182.185-.078.363.104.178.462.763.992 1.235.683.608 1.258.796 1.436.885.178.089.282.074.386-.044.104-.119.445-.519.564-.697.119-.178.237-.148.396-.089.159.059 1.008.475 1.181.562.173.087.288.131.332.205.044.074.044.43-.1 1.035z"/></svg> Enviar WhatsApp`;
+    btnWa.onclick = () => {
+      const preview = text.length > 900 ? text.slice(0, 900) + "\n\n(...continua no site)" : text;
+      const msg = `📖 *BibliaAI Studio CBR - Palavra & Restauração*\n\n${preview}\n\n👉 Acesse o estudo completo: https://cbrsousa.github.io/biblia-cbr/`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
+    };
 
-  bar.appendChild(btnCopy);
-  bar.appendChild(btnWa);
-  bubble.appendChild(bar);
+    bar.appendChild(btnCopy);
+    bar.appendChild(btnWa);
+    bubble.appendChild(bar);
+  } catch (err) {
+    console.warn("attachMessageActions:", err);
+  }
 }
 
 function scrollToBottom() {
