@@ -169,7 +169,7 @@ async function sendMessage() {
   DOM.userInput.value = "";
   DOM.userInput.style.height = "auto";
 
-  const { row, contentDiv } = createAssistantMessageBubble();
+  const { row, bubble, contentDiv } = createAssistantMessageBubble();
   DOM.chatMessages.appendChild(row);
   scrollToBottom();
 
