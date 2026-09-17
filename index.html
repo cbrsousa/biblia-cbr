@@ -19,12 +19,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css?v=15">
+  <link rel="stylesheet" href="styles.css?v=16">
   <script>
     if ('caches' in window) {
       caches.keys().then(keys => {
         keys.forEach(k => {
-          if (k !== 'biblia-cbr-pwa-v15') caches.delete(k);
+          if (k !== 'biblia-cbr-pwa-v16') caches.delete(k);
         });
       });
     }
@@ -97,6 +97,17 @@
         </div>
 
         <div class="controls-right">
+          <div class="header-status-badges desktop-only">
+            <div class="status-badge-groq" title="Conexão direta LPU Groq (~465 tokens/segundo)">
+              <span class="live-dot"></span>
+              <span class="badge-text">LPU Groq ~465 t/s</span>
+            </div>
+            <div class="status-badge-doctrine" title="Fidelidade estrita à Palavra e à Doutrina Batista da Restauração">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Sã Doutrina CBR</span>
+            </div>
+          </div>
+
           <button id="btnNewChatMobile" class="btn-new-chat-mobile mobile-only" title="Novo Estudo">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Novo
@@ -109,7 +120,9 @@
         <!-- Welcome Screen -->
         <div id="welcomeScreen" class="welcome-screen">
           <div class="welcome-logo-container">
-            <img src="logo_cbr.png" alt="Comunidade Batista da Restauração" class="welcome-cbr-logo">
+            <div class="welcome-logo-wrapper">
+              <img src="logo_cbr.png" alt="Comunidade Batista da Restauração" class="welcome-cbr-logo">
+            </div>
           </div>
           <h1>IA STUDIO CBR</h1>
           <p>Estúdio Bíblico Inteligente · Comunidade Batista da Restauração · Fundamentado na Palavra Viva de Deus.</p>
@@ -230,6 +243,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=15"></script>
+  <script src="app.js?v=16"></script>
 </body>
 </html>
