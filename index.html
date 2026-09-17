@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css?v=21">
+  <link rel="stylesheet" href="styles.css?v=22">
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(registrations => {
@@ -29,7 +29,7 @@
     if ('caches' in window) {
       caches.keys().then(keys => {
         keys.forEach(k => {
-          if (k !== 'biblia-cbr-pwa-v21') caches.delete(k);
+          if (k !== 'biblia-cbr-pwa-v22') caches.delete(k);
         });
       });
     }
@@ -48,6 +48,9 @@
           <h2>IA STUDIO CBR</h2>
           <span class="header-subtitle">Palavra & Restauração</span>
         </div>
+        <button id="btnCollapseSidebar" class="btn-collapse-sidebar" title="Recolher Barra Lateral">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
       </div>
 
       <button id="btnNewChat" class="btn-new-chat">
@@ -65,6 +68,21 @@
         </div>
         <div id="chatHistoryList" class="history-list">
           <!-- Histórico Dinâmico -->
+        </div>
+      </div>
+
+      <!-- Card Versículo do Dia / Promessa Ministerial -->
+      <div class="daily-verse-card" id="dailyVerseCard">
+        <div class="verse-header-row">
+          <span class="verse-badge">✨ Promessa Diária</span>
+          <button id="btnNextVerse" class="btn-icon btn-refresh-verse" title="Outro Versículo">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          </button>
+        </div>
+        <p class="verse-text" id="dailyVerseText">"Posso todas as coisas naquele que me fortalece."</p>
+        <div class="verse-footer-row">
+          <span class="verse-ref" id="dailyVerseRef">Filipenses 4:13</span>
+          <button id="btnStudyDailyVerse" class="btn-verse-action" title="Estudar este versículo na IA">Estudar →</button>
         </div>
       </div>
 
@@ -86,7 +104,7 @@
       <!-- Top Control Bar -->
       <header class="chat-header">
         <div class="controls-left">
-          <button id="btnToggleMobileSidebar" class="btn-icon mobile-only" title="Menu">
+          <button id="btnToggleMobileSidebar" class="btn-icon btn-toggle-sidebar" title="Menu Lateral">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           </button>
 
@@ -248,6 +266,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=21"></script>
+  <script src="app.js?v=22"></script>
 </body>
 </html>

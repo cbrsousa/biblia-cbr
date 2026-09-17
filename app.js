@@ -124,15 +124,60 @@ const DOM = {
   btnClearAllChatsTop: document.getElementById("btnClearAllChatsTop"),
   sidebar: document.getElementById("sidebar"),
   btnToggleMobileSidebar: document.getElementById("btnToggleMobileSidebar"),
-  btnNewChatMobile: document.getElementById("btnNewChatMobile")
+  btnNewChatMobile: document.getElementById("btnNewChatMobile"),
+  appLayout: document.querySelector(".app-layout"),
+  btnCollapseSidebar: document.getElementById("btnCollapseSidebar"),
+  dailyVerseCard: document.getElementById("dailyVerseCard"),
+  dailyVerseText: document.getElementById("dailyVerseText"),
+  dailyVerseRef: document.getElementById("dailyVerseRef"),
+  btnNextVerse: document.getElementById("btnNextVerse"),
+  btnStudyDailyVerse: document.getElementById("btnStudyDailyVerse")
 };
 
 marked.setOptions({ breaks: true, gfm: true });
 
+// Versículos Diários / Promessas Ministeriais
+const DAILY_VERSES = [
+  { text: '"Posso todas as coisas naquele que me fortalece."', ref: 'Filipenses 4:13' },
+  { text: '"O Senhor é o meu pastor; de nada terei falta."', ref: 'Salmos 23:1' },
+  { text: '"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito..."', ref: 'João 3:16' },
+  { text: '"Mas os que esperam no Senhor renovam as suas forças, sobem com asas como águias."', ref: 'Isaías 40:31' },
+  { text: '"Lâmpada para os meus pés é a tua palavra e luz para o meu caminho."', ref: 'Salmos 119:105' },
+  { text: '"Porque sou eu que conheço os planos que tenho para vocês, diz o Senhor..."', ref: 'Jeremias 29:11' },
+  { text: '"Pois pela graça sois salvos, por meio da fé; e isto não vem de vós, é dom de Deus."', ref: 'Efésios 2:8' },
+  { text: '"Toda a Escritura é divinamente inspirada e proveitosa para o ensino, repreensão e correção."', ref: '2 Timóteo 3:16' }
+];
+
+let currentVerseIndex = Math.floor(Math.random() * DAILY_VERSES.length);
+
+function updateDailyVerse() {
+  if (!DOM.dailyVerseText || !DOM.dailyVerseRef) return;
+  const v = DAILY_VERSES[currentVerseIndex % DAILY_VERSES.length];
+  DOM.dailyVerseText.textContent = v.text;
+  DOM.dailyVerseRef.textContent = v.ref;
+}
+updateDailyVerse();
+
+if (DOM.btnNextVerse) {
+  DOM.btnNextVerse.addEventListener("click", () => {
+    currentVerseIndex++;
+    updateDailyVerse();
+  });
+}
+
+if (DOM.btnStudyDailyVerse) {
+  DOM.btnStudyDailyVerse.addEventListener("click", () => {
+    const v = DAILY_VERSES[currentVerseIndex % DAILY_VERSES.length];
+    DOM.userInput.value = `Elabore uma exegese aprofundada e devocional bíblico com aplicação prática pastoral sobre ${v.ref}: ${v.text}`;
+    DOM.userInput.dispatchEvent(new Event("input"));
+    sendMessage();
+  });
+}
+
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=21").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=22").then((reg) => {
       reg.update();
     }).catch(() => {});
   });
@@ -148,10 +193,20 @@ function startNewChat() {
   location.reload();
 }
 
-// Mobile Sidebar Toggle
+// Toggle da Sidebar (Desktop Recolhível & Mobile Drawer)
+if (DOM.btnCollapseSidebar) {
+  DOM.btnCollapseSidebar.addEventListener("click", () => {
+    DOM.appLayout.classList.add("sidebar-collapsed");
+  });
+}
+
 if (DOM.btnToggleMobileSidebar) {
   DOM.btnToggleMobileSidebar.addEventListener("click", () => {
-    DOM.sidebar.classList.toggle("open");
+    if (window.innerWidth > 768) {
+      DOM.appLayout.classList.toggle("sidebar-collapsed");
+    } else {
+      DOM.sidebar.classList.toggle("open");
+    }
   });
 }
 
