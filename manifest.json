@@ -1,6 +1,6 @@
-﻿{
-  "name": "BibliaAI Studio CBR - Palavra & Restauração",
-  "short_name": "BibliaAI CBR",
+{
+  "name": "IA Studio CBR - Palavra & Restauração",
+  "short_name": "IA Studio CBR",
   "description": "Estúdio Bíblico Inteligente da Comunidade Batista da Restauração",
   "start_url": "./index.html",
   "display": "standalone",

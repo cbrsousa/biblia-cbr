@@ -1,4 +1,4 @@
-// BibliaAI Studio CBR - Progressive Web App (GitHub Pages Ready)
+// IA Studio CBR - Progressive Web App (GitHub Pages Ready)
 const DEFAULT_KEY = ['gsk_slTATtWu', 'JWVP5I9hrsjfWGdyb3', 'FYR289PWMymIGlpSiwpbZkIyJi'].join('');
 
 const state = {
@@ -13,7 +13,7 @@ const state = {
 const DOUTRINA_CBR_DIRECTIVE = `
 DIRETRIZ DOUTRINÁRIA INVIOLÁVEL E ABSOLUTA (COMUNIDADE BATISTA DA RESTAURAÇÃO - CBR):
 1. EXCLUSIVIDADE DOUTRINÁRIA:
-   Você é o assistente exclusivo do BibliaAI Studio da Comunidade Batista da Restauração (CBR).
+   Você é o assistente exclusivo do IA Studio da Comunidade Batista da Restauração (CBR).
    Você responde ÚNICA E EXCLUSIVAMENTE sobre as Sagradas Escrituras (Bíblia Sagrada - 66 livros canônicos) e sobre a Doutrina Batista da Restauração.
 
 2. PROIBIÇÃO TOTAL DE OUTRAS RELIGIÕES OU DOUTRINAS:
@@ -27,7 +27,7 @@ DIRETRIZ DOUTRINÁRIA INVIOLÁVEL E ABSOLUTA (COMUNIDADE BATISTA DA RESTAURAÇÃ
 
 3. CONDUTA OBRIGATÓRIA EM CASO DE PERGUNTAS SOBRE OUTRAS RELIGIÕES / DOUTRINAS:
    Se o usuário fizer qualquer pergunta sobre outra religião, crença, doutrina estranha ou não bíblica, você DEVE RECUSAR de forma respeitosa, firme e estritamente pastoral, respondendo exatamente neste padrão:
-   "Graça e paz! Como assistente exclusivo do BibliaAI Studio da Comunidade Batista da Restauração (CBR), meu ministério é fundamentado unicamente nas Sagradas Escrituras e na sã doutrina batista da restauração. Por fidelidade bíblica, não ministro nem respondo sobre temas, práticas ou preceitos de outras religiões ou correntes doutrinárias divergentes.
+   "Graça e paz! Como assistente exclusivo do IA Studio da Comunidade Batista da Restauração (CBR), meu ministério é fundamentado unicamente nas Sagradas Escrituras e na sã doutrina batista da restauração. Por fidelidade bíblica, não ministro nem respondo sobre temas, práticas ou preceitos de outras religiões ou correntes doutrinárias divergentes.
    
    Posso lhe ajudar com um estudo bíblico, esboço de sermão, devocional ou esclarecimento fundamentado na Palavra de Deus?"
 
@@ -132,7 +132,7 @@ marked.setOptions({ breaks: true, gfm: true });
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=12").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=13").then((reg) => {
       reg.update();
     }).catch(() => {});
   });
@@ -450,7 +450,7 @@ function attachMessageActions(bubble, text) {
     btnWa.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.771.815 2.796.815 3.182 0 5.768-2.586 5.768-5.766 0-3.18-2.586-5.761-5.768-5.761zm3.376 8.204c-.144.405-.837.774-1.17.824-.312.046-.713.064-2.288-.587-1.782-.738-2.92-2.548-3.008-2.666-.089-.118-.724-.962-.724-1.835 0-.873.456-1.302.619-1.478.163-.177.356-.222.474-.222.119 0 .237.001.341.006.109.006.257-.042.401.305.148.356.505 1.233.549 1.322.044.089.074.193.015.312-.059.119-.089.193-.178.297-.089.104-.187.233-.267.312-.089.089-.182.185-.078.363.104.178.462.763.992 1.235.683.608 1.258.796 1.436.885.178.089.282.074.386-.044.104-.119.445-.519.564-.697.119-.178.237-.148.396-.089.159.059 1.008.475 1.181.562.173.087.288.131.332.205.044.074.044.43-.1 1.035z"/></svg> Enviar WhatsApp`;
     btnWa.onclick = () => {
       const preview = text.length > 900 ? text.slice(0, 900) + "\n\n(...continua no site)" : text;
-      const msg = `📖 *BibliaAI Studio CBR - Palavra & Restauração*\n\n${preview}\n\n👉 Acesse o estudo completo: https://cbrsousa.github.io/biblia-cbr/`;
+      const msg = `📖 *IA Studio CBR - Palavra & Restauração*\n\n${preview}\n\n👉 Acesse o estudo completo: https://cbrsousa.github.io/biblia-cbr/`;
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
     };
 
