@@ -123,6 +123,7 @@ const DOM = {
   inputGroqKey: document.getElementById("inputGroqKey"),
   btnClearAllChatsTop: document.getElementById("btnClearAllChatsTop"),
   sidebar: document.getElementById("sidebar"),
+  sidebarOverlay: document.getElementById("sidebarOverlay"),
   btnToggleMobileSidebar: document.getElementById("btnToggleMobileSidebar"),
   btnNewChatMobile: document.getElementById("btnNewChatMobile"),
   appLayout: document.querySelector(".app-layout"),
@@ -158,6 +159,24 @@ function updateDailyVerse() {
 }
 updateDailyVerse();
 
+function openMobileSidebar() {
+  if (DOM.sidebar) DOM.sidebar.classList.add("open");
+  if (DOM.sidebarOverlay) DOM.sidebarOverlay.classList.add("active");
+}
+
+function closeMobileSidebar() {
+  if (DOM.sidebar) DOM.sidebar.classList.remove("open");
+  if (DOM.sidebarOverlay) DOM.sidebarOverlay.classList.remove("active");
+}
+
+function toggleMobileSidebar() {
+  if (DOM.sidebar && DOM.sidebar.classList.contains("open")) {
+    closeMobileSidebar();
+  } else {
+    openMobileSidebar();
+  }
+}
+
 if (DOM.btnNextVerse) {
   DOM.btnNextVerse.addEventListener("click", () => {
     currentVerseIndex++;
@@ -167,6 +186,8 @@ if (DOM.btnNextVerse) {
 
 if (DOM.btnStudyDailyVerse) {
   DOM.btnStudyDailyVerse.addEventListener("click", () => {
+    // No celular ou com a gaveta aberta, fecha a gaveta para dar foco ao estudo gerado
+    closeMobileSidebar();
     const v = DAILY_VERSES[currentVerseIndex % DAILY_VERSES.length];
     DOM.userInput.value = `Elabore uma exegese aprofundada e devocional bíblico com aplicação prática pastoral sobre ${v.ref}: ${v.text}`;
     DOM.userInput.dispatchEvent(new Event("input"));
@@ -177,7 +198,7 @@ if (DOM.btnStudyDailyVerse) {
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=22").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=23").then((reg) => {
       reg.update();
     }).catch(() => {});
   });
@@ -193,10 +214,14 @@ function startNewChat() {
   location.reload();
 }
 
-// Toggle da Sidebar (Desktop Recolhível & Mobile Drawer)
+// Toggle da Sidebar (Desktop Recolhível & Mobile Drawer com Fechamento Inteligente)
 if (DOM.btnCollapseSidebar) {
   DOM.btnCollapseSidebar.addEventListener("click", () => {
-    DOM.appLayout.classList.add("sidebar-collapsed");
+    if (window.innerWidth > 768) {
+      DOM.appLayout.classList.add("sidebar-collapsed");
+    } else {
+      closeMobileSidebar();
+    }
   });
 }
 
@@ -205,8 +230,14 @@ if (DOM.btnToggleMobileSidebar) {
     if (window.innerWidth > 768) {
       DOM.appLayout.classList.toggle("sidebar-collapsed");
     } else {
-      DOM.sidebar.classList.toggle("open");
+      toggleMobileSidebar();
     }
+  });
+}
+
+if (DOM.sidebarOverlay) {
+  DOM.sidebarOverlay.addEventListener("click", () => {
+    closeMobileSidebar();
   });
 }
 
@@ -583,7 +614,7 @@ function renderChatHistory() {
     titleSpan.textContent = c.title;
     titleSpan.onclick = () => {
       loadChat(c.id);
-      if (DOM.sidebar.classList.contains("open")) DOM.sidebar.classList.remove("open");
+      closeMobileSidebar();
     };
 
     const deleteBtn = document.createElement("button");
@@ -634,6 +665,7 @@ function loadChat(chatId) {
 }
 
 DOM.btnNewChat.addEventListener("click", () => {
+  closeMobileSidebar();
   startNewChat();
 });
 
@@ -648,6 +680,7 @@ if (DOM.btnClearAllChatsTop) {
 }
 
 DOM.btnOpenSettings.addEventListener("click", () => {
+  closeMobileSidebar();
   DOM.inputGroqKey.value = state.groqKey;
   DOM.settingsModal.classList.remove("hidden");
 });

@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css?v=22">
+  <link rel="stylesheet" href="styles.css?v=23">
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(registrations => {
@@ -29,7 +29,7 @@
     if ('caches' in window) {
       caches.keys().then(keys => {
         keys.forEach(k => {
-          if (k !== 'biblia-cbr-pwa-v22') caches.delete(k);
+          if (k !== 'biblia-cbr-pwa-v23') caches.delete(k);
         });
       });
     }
@@ -38,7 +38,7 @@
 </head>
 <body>
   <div class="app-layout">
-    <!-- Left Sidebar (Desktop / Tablet) -->
+    <!-- Left Sidebar (Desktop / Tablet / Mobile Drawer) -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="logo-box">
@@ -98,6 +98,9 @@
         </div>
       </div>
     </aside>
+
+    <!-- Overlay escuro para fechar gaveta no mobile ao tocar fora -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
 
     <!-- Main Chat Workspace -->
     <main class="chat-workspace">
@@ -266,6 +269,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=22"></script>
+  <script src="app.js?v=23"></script>
 </body>
 </html>

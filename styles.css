@@ -1576,6 +1576,10 @@ body {
   display: none;
 }
 
+.sidebar-overlay {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .mobile-only {
     display: inline-flex !important;
@@ -1589,8 +1593,79 @@ body {
     display: inline-flex !important;
   }
 
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    height: 100dvh;
+    background: rgba(3, 6, 12, 0.72);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 95;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+
+  .sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   .btn-collapse-sidebar {
-    display: none !important;
+    display: flex !important;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: var(--accent-gold-light);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .btn-collapse-sidebar:active {
+    background: rgba(212, 175, 55, 0.25);
+    transform: scale(0.94);
+  }
+
+  .btn-collapse-sidebar svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .daily-verse-card {
+    margin: 8px 0 12px 0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(20, 26, 42, 0.96), rgba(10, 14, 24, 0.98));
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(212, 175, 55, 0.08);
+  }
+
+  .daily-verse-card .verse-text {
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin-bottom: 9px;
+  }
+
+  .daily-verse-card .btn-verse-action {
+    padding: 5px 12px;
+    font-size: 11.5px;
+    border-radius: 14px;
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--accent-gold);
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .daily-verse-card .btn-refresh-verse {
+    width: 26px;
+    height: 26px;
   }
 
   .app-layout.sidebar-collapsed .sidebar {
