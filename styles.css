@@ -1035,15 +1035,26 @@ body {
   box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
   transition: all 0.22s ease;
   flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.btn-send svg {
+.btn-send svg,
+.btn-send svg * {
+  pointer-events: none !important;
   stroke-width: 2.5;
 }
 
 .btn-send:hover {
   transform: scale(1.08);
   box-shadow: 0 6px 20px rgba(212, 175, 55, 0.65);
+}
+
+.btn-send:active {
+  transform: scale(0.92);
+  filter: brightness(1.15);
 }
 
 .input-actions {
@@ -1071,12 +1082,26 @@ body {
   transition: all 0.2s ease;
   flex-shrink: 0;
   padding: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.stop-btn svg,
+.stop-btn svg * {
+  pointer-events: none !important;
 }
 
 .stop-btn:hover {
   background: #dc2626;
   transform: scale(1.08);
   box-shadow: 0 6px 18px rgba(239, 68, 68, 0.65);
+}
+
+.stop-btn:active {
+  transform: scale(0.92);
+  filter: brightness(1.15);
 }
 
 .hidden {
@@ -1554,8 +1579,8 @@ body {
 
   .input-actions {
     position: relative;
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1564,13 +1589,14 @@ body {
 
   .btn-send,
   .stop-btn {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    touch-action: manipulation;
   }
 
   .modal-box {

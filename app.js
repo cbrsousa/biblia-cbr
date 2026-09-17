@@ -132,7 +132,7 @@ marked.setOptions({ breaks: true, gfm: true });
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=19").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=20").then((reg) => {
       reg.update();
     }).catch(() => {});
   });
@@ -353,9 +353,13 @@ async function sendMessage() {
   }
 }
 
-DOM.btnStopStream.addEventListener("click", () => {
+function triggerStop(e) {
+  if (e && e.cancelable) e.preventDefault();
   if (state.abortController) state.abortController.abort();
-});
+}
+DOM.btnStopStream.addEventListener("pointerdown", triggerStop);
+DOM.btnStopStream.addEventListener("touchstart", triggerStop, { passive: false });
+DOM.btnStopStream.addEventListener("click", triggerStop);
 
 function appendUserMessage(text) {
   const row = document.createElement("div");
@@ -603,14 +607,25 @@ DOM.btnSaveSettings.addEventListener("click", () => {
   DOM.settingsModal.classList.add("hidden");
 });
 
-DOM.btnSendMessage.addEventListener("click", () => {
+let isSending = false;
+function triggerSend(e) {
+  if (e && e.cancelable) {
+    e.preventDefault();
+  }
+  if (isSending || state.isGenerating) return;
+  isSending = true;
+  setTimeout(() => { isSending = false; }, 400);
   sendMessage();
-});
+}
+
+DOM.btnSendMessage.addEventListener("pointerdown", triggerSend);
+DOM.btnSendMessage.addEventListener("touchstart", triggerSend, { passive: false });
+DOM.btnSendMessage.addEventListener("click", triggerSend);
 
 DOM.userInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
-    sendMessage();
+    triggerSend(e);
   }
 });
 

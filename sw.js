@@ -1,4 +1,4 @@
-const CACHE_NAME = "biblia-cbr-pwa-v19";
+const CACHE_NAME = "biblia-cbr-pwa-v20";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
@@ -36,7 +36,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
   e.respondWith(
-    fetch(e.request)
+    fetch(e.request, { cache: "no-cache" })
       .then((networkRes) => {
         if (networkRes && networkRes.status === 200 && e.request.method === "GET") {
           const resClone = networkRes.clone();
