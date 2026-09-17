@@ -1,4 +1,4 @@
-const CACHE_NAME = "biblia-cbr-pwa-v3";
+const CACHE_NAME = "biblia-cbr-pwa-v8";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
