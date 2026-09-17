@@ -132,7 +132,7 @@ marked.setOptions({ breaks: true, gfm: true });
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=20").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=21").then((reg) => {
       reg.update();
     }).catch(() => {});
   });
