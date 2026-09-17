@@ -184,17 +184,6 @@ body {
   margin-bottom: 16px;
 }
 
-.welcome-cbr-logo {
-  max-width: 130px;
-  max-height: 130px;
-  background: #ffffff;
-  padding: 8px 12px;
-  border-radius: 16px;
-  border: 2px solid var(--accent-gold);
-  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.35);
-  object-fit: contain;
-}
-
 .header-text h2 {
   font-family: var(--font-serif);
   font-size: 15.5px;
@@ -682,39 +671,97 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
+/* Aura Celestial Externa (Halo de Luz Sagrada) */
 .welcome-logo-wrapper {
-  width: 94px;
-  height: 94px;
+  width: 114px;
+  height: 114px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.04) 65%, transparent 75%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.05) 58%, transparent 72%);
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1.5px solid rgba(212, 175, 55, 0.45);
-  box-shadow: 0 0 26px rgba(212, 175, 55, 0.35), inset 0 0 16px rgba(212, 175, 55, 0.16);
+  box-shadow: 0 0 32px rgba(212, 175, 55, 0.35), inset 0 0 20px rgba(212, 175, 55, 0.16);
   animation: sacredHaloPulse 4s infinite ease-in-out;
   padding: 6px;
+  position: relative;
 }
 
 @keyframes sacredHaloPulse {
   0%, 100% {
-    box-shadow: 0 0 18px rgba(212, 175, 55, 0.3), inset 0 0 10px rgba(212, 175, 55, 0.12);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 0 12px rgba(212, 175, 55, 0.12);
     border-color: rgba(212, 175, 55, 0.4);
+    transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 36px rgba(212, 175, 55, 0.6), inset 0 0 22px rgba(212, 175, 55, 0.26);
-    border-color: rgba(212, 175, 55, 0.75);
+    box-shadow: 0 0 44px rgba(212, 175, 55, 0.65), inset 0 0 26px rgba(212, 175, 55, 0.26);
+    border-color: rgba(212, 175, 55, 0.8);
+    transform: scale(1.025);
   }
 }
 
+/* Medalhão Sagrado Oficial CBR (Círculo Perolado Nobre com Moldura de Ouro Real) */
+.welcome-medallion {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 32%, #ffffff 0%, #fbf9f4 50%, #ece2cb 100%);
+  border: 2.5px solid var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.95),
+    inset 0 -3px 6px rgba(180, 130, 20, 0.35),
+    0 0 18px rgba(212, 175, 55, 0.4);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.welcome-medallion::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  pointer-events: none;
+}
+
+.welcome-medallion:hover {
+  transform: scale(1.04);
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.7),
+    inset 0 2px 5px rgba(255, 255, 255, 1),
+    inset 0 -3px 7px rgba(180, 130, 20, 0.45),
+    0 0 26px rgba(212, 175, 55, 0.65);
+}
+
+/* Logotipo Oficial CBR - 100% Preservado e Centralizado com Harmonia Circular */
 .welcome-cbr-logo {
-  max-width: 68px;
-  max-height: 68px;
+  width: 62px;
+  height: 62px;
+  max-width: 72%;
+  max-height: 72%;
   object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  filter: drop-shadow(0 1.5px 3px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.welcome-medallion:hover .welcome-cbr-logo {
+  transform: scale(1.03);
 }
 
 .welcome-screen h1 {
@@ -1771,9 +1818,23 @@ body {
     margin-bottom: 8px;
   }
 
+  .welcome-logo-wrapper {
+    width: 98px;
+    height: 98px;
+    padding: 5px;
+  }
+
+  .welcome-medallion {
+    width: 78px;
+    height: 78px;
+    border-width: 2px;
+  }
+
   .welcome-cbr-logo {
-    max-width: 68px;
-    max-height: 68px;
+    width: 54px;
+    height: 54px;
+    max-width: 72%;
+    max-height: 72%;
   }
 
   .welcome-screen h1 {

@@ -198,7 +198,7 @@ if (DOM.btnStudyDailyVerse) {
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=23").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=24").then((reg) => {
       reg.update();
     }).catch(() => {});
   });

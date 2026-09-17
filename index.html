@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css?v=23">
+  <link rel="stylesheet" href="styles.css?v=24">
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(registrations => {
@@ -29,7 +29,7 @@
     if ('caches' in window) {
       caches.keys().then(keys => {
         keys.forEach(k => {
-          if (k !== 'biblia-cbr-pwa-v23') caches.delete(k);
+          if (k !== 'biblia-cbr-pwa-v24') caches.delete(k);
         });
       });
     }
@@ -147,7 +147,9 @@
         <div id="welcomeScreen" class="welcome-screen">
           <div class="welcome-logo-container">
             <div class="welcome-logo-wrapper">
-              <img src="logo_cbr.png" alt="Comunidade Batista da Restauração" class="welcome-cbr-logo">
+              <div class="welcome-medallion">
+                <img src="logo_cbr.png" alt="Comunidade Batista da Restauração" class="welcome-cbr-logo">
+              </div>
             </div>
           </div>
           <h1>IA STUDIO CBR</h1>
@@ -269,6 +271,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=23"></script>
+  <script src="app.js?v=24"></script>
 </body>
 </html>
