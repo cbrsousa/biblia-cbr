@@ -459,19 +459,25 @@ body {
 .suggestions-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  gap: 16px;
   text-align: left;
+  margin-top: 10px;
 }
 
 .suggestion-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.85), rgba(11, 15, 25, 0.95));
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 14px;
   padding: 18px 20px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
 }
 
 .suggestion-card::before {
@@ -487,35 +493,103 @@ body {
 }
 
 .suggestion-card:hover {
-  border-color: rgba(212, 175, 55, 0.5);
-  transform: translateY(-2px);
-  background: var(--bg-card-alt);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(212, 175, 55, 0.6);
+  transform: translateY(-3px);
+  background: linear-gradient(145deg, rgba(22, 32, 50, 0.92), rgba(14, 20, 32, 0.98));
+  box-shadow: 0 10px 28px rgba(212, 175, 55, 0.12), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.suggestion-card:active {
+  transform: scale(0.98);
 }
 
 .suggestion-card:hover::before {
   opacity: 1;
 }
 
-.card-icon {
-  font-size: 22px;
-  display: block;
-  margin-bottom: 8px;
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
-.suggestion-card h4 {
+.card-icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.08);
+  transition: all 0.25s ease;
+}
+
+.suggestion-card:hover .card-icon-badge {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: rgba(212, 175, 55, 0.55);
+  transform: scale(1.05);
+}
+
+.card-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--accent-gold-light);
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 20px;
+  padding: 3px 9px;
+}
+
+.card-content h4 {
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
 }
 
-.suggestion-card p {
-  font-size: 12.5px;
-  color: var(--text-muted);
-  margin-bottom: 0;
-  line-height: 1.4;
+.suggestion-card:hover .card-content h4 {
+  color: var(--accent-gold-light);
+}
+
+.card-content p {
+  font-size: 12.8px;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.card-footer-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  margin-top: auto;
+  opacity: 0.85;
+  transition: all 0.2s ease;
+}
+
+.card-footer-action svg {
+  transition: transform 0.2s ease;
+}
+
+.suggestion-card:hover .card-footer-action {
+  opacity: 1;
+  color: var(--accent-gold-light);
+}
+
+.suggestion-card:hover .card-footer-action svg {
+  transform: translateX(4px);
 }
 
 /* ============================================================
@@ -1161,31 +1235,44 @@ body {
 
   .suggestions-grid {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 10px;
   }
 
   .suggestion-card {
-    padding: 10px 14px;
+    padding: 13px 15px;
     border-radius: 12px;
   }
 
-  .suggestion-card .card-icon {
-    font-size: 18px;
-    margin-right: 8px;
-    display: inline-block;
-    vertical-align: middle;
+  .card-top-row {
+    margin-bottom: 8px;
   }
 
-  .suggestion-card h4 {
-    display: inline;
-    font-size: 13.5px;
-    vertical-align: middle;
+  .card-icon-badge {
+    width: 34px;
+    height: 34px;
+    font-size: 17px;
+    border-radius: 8px;
   }
 
-  .suggestion-card p {
+  .card-pill {
+    font-size: 9px;
+    padding: 2px 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .card-content h4 {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  .card-content p {
     font-size: 12px;
-    margin-top: 4px;
+    margin-bottom: 8px;
     line-height: 1.35;
+  }
+
+  .card-footer-action {
+    font-size: 11px;
   }
 
   .message-row {

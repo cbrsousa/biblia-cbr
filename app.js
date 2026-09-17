@@ -132,7 +132,7 @@ marked.setOptions({ breaks: true, gfm: true });
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=11").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=12").then((reg) => {
       reg.update();
     }).catch(() => {});
   });
@@ -183,6 +183,11 @@ DOM.userInput.addEventListener("input", function() {
 document.querySelectorAll(".suggestion-card").forEach(card => {
   card.addEventListener("click", () => {
     const prompt = card.getAttribute("data-prompt");
+    const targetMode = card.getAttribute("data-mode");
+    if (targetMode && DOM.selectMode) {
+      DOM.selectMode.value = targetMode;
+      document.querySelectorAll(".chip-btn").forEach(c => c.classList.toggle("active", c.dataset.mode === targetMode));
+    }
     DOM.userInput.value = prompt;
     DOM.userInput.dispatchEvent(new Event("input"));
     sendMessage();

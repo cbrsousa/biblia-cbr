@@ -19,12 +19,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
   <script>
     if ('caches' in window) {
       caches.keys().then(keys => {
         keys.forEach(k => {
-          if (k !== 'biblia-cbr-pwa-v11') caches.delete(k);
+          if (k !== 'biblia-cbr-pwa-v12') caches.delete(k);
         });
       });
     }
@@ -115,25 +115,64 @@
           <p>Estúdio Bíblico Inteligente · Comunidade Batista da Restauração · Fundamentado na Palavra Viva de Deus.</p>
 
           <div class="suggestions-grid">
-            <div class="suggestion-card" data-prompt="Elabore um esboço de sermão expositivo de alto impacto sobre Lucas 15 (O Filho Pródigo), com 3 pontos expositivos, ilustrações práticas, aplicação pastoral de restauração familiar, apelo e dinâmica para célula.">
-              <span class="card-icon">🎙️</span>
-              <h4>Esboço de Pregação</h4>
-              <p>Restauração familiar, ilustrações e guia de célula</p>
+            <div class="suggestion-card" data-mode="esboco_pregacao" data-prompt="Elabore um esboço de sermão expositivo de alto impacto sobre Lucas 15 (O Filho Pródigo), com 3 pontos expositivos, ilustrações práticas, aplicação pastoral de restauração familiar, apelo e dinâmica para célula.">
+              <div class="card-top-row">
+                <div class="card-icon-badge">🎙️</div>
+                <span class="card-pill">PÚLPITO & CÉLULA</span>
+              </div>
+              <div class="card-content">
+                <h4>Esboço de Pregação</h4>
+                <p>Restauração familiar, ilustrações expositivas e guia prático de célula</p>
+              </div>
+              <div class="card-footer-action">
+                <span>Estruturar sermão</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
             </div>
-            <div class="suggestion-card" data-prompt="Faça um estudo exegético e histórico detalhado de Romanos 8:1-4 sobre a liberdade em Cristo Jesus e a vida no Espírito.">
-              <span class="card-icon">📖</span>
-              <h4>Estudo em Romanos 8</h4>
-              <p>Nenhuma condenação há para os que estão em Cristo</p>
+
+            <div class="suggestion-card" data-mode="estudo_biblico" data-prompt="Faça um estudo exegético e histórico detalhado das Escrituras Sagradas, analisando termos no texto original (hebraico/grego) e contexto teológico.">
+              <div class="card-top-row">
+                <div class="card-icon-badge">📖</div>
+                <span class="card-pill">EXEGESE & ORIGINAL</span>
+              </div>
+              <div class="card-content">
+                <h4>Exegese & Estudo Bíblico</h4>
+                <p>Análise profunda no texto original (grego/hebraico), contexto e aplicação viva</p>
+              </div>
+              <div class="card-footer-action">
+                <span>Iniciar estudo</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
             </div>
-            <div class="suggestion-card" data-prompt="Escreva uma mensagem devocional de consolo e fortalecimento para quem está passando por uma crise de ansiedade ou enfermidade na alma.">
-              <span class="card-icon">🕊️</span>
-              <h4>Devocional de Restauração</h4>
-              <p>Paz de Deus e esperança para momentos difíceis</p>
+
+            <div class="suggestion-card" data-mode="aconselhamento_pastoral" data-prompt="Escreva uma mensagem devocional de consolo, cura interior e restauração espiritual para quem está enfrentando aflições e ansiedade.">
+              <div class="card-top-row">
+                <div class="card-icon-badge">🕊️</div>
+                <span class="card-pill">CURA & DEVOCIONAL</span>
+              </div>
+              <div class="card-content">
+                <h4>Devocional de Restauração</h4>
+                <p>Paz de Deus, consolo pastoral, cura da alma e fortalecimento da fé</p>
+              </div>
+              <div class="card-footer-action">
+                <span>Receber consolo</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
             </div>
-            <div class="suggestion-card" data-prompt="Explique a doutrina batista bíblica do sacerdócio universal de todos os crentes e a autoridade soberana das Escrituras.">
-              <span class="card-icon">⛪</span>
-              <h4>Doutrina & Teologia</h4>
-              <p>Princípios históricos e bíblicos batistas</p>
+
+            <div class="suggestion-card" data-mode="duvidas_teologicas" data-prompt="Explique a sã doutrina da Comunidade Batista da Restauração: a autoridade suprema das Escrituras Sagradas, o sacerdócio universal de todos os crentes e a salvação pela graça.">
+              <div class="card-top-row">
+                <div class="card-icon-badge">⛪</div>
+                <span class="card-pill">SÃ DOUTRINA CBR</span>
+              </div>
+              <div class="card-content">
+                <h4>Doutrina Batista da Restauração</h4>
+                <p>Autoridade bíblica, batismo por imersão, sacerdócio e redenção em Cristo</p>
+              </div>
+              <div class="card-footer-action">
+                <span>Consultar doutrina</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
             </div>
           </div>
         </div>
@@ -191,6 +230,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=11"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>
