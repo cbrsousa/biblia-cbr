@@ -132,10 +132,20 @@ marked.setOptions({ breaks: true, gfm: true });
 // Service Worker Registration for PWA - Força atualização imediata
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=17").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=18").then((reg) => {
       reg.update();
     }).catch(() => {});
   });
+}
+
+function startNewChat() {
+  state.activeChatId = null;
+  state.isGenerating = false;
+  if (state.abortController) {
+    try { state.abortController.abort(); } catch (e) {}
+    state.abortController = null;
+  }
+  location.reload();
 }
 
 // Mobile Sidebar Toggle
@@ -148,8 +158,7 @@ if (DOM.btnToggleMobileSidebar) {
 // Botão Novo Estudo no Topo Mobile
 if (DOM.btnNewChatMobile) {
   DOM.btnNewChatMobile.addEventListener("click", () => {
-    createNewChat();
-    DOM.userInput.focus();
+    startNewChat();
   });
 }
 
@@ -222,7 +231,9 @@ async function sendMessage() {
   scrollToBottom();
 
   state.isGenerating = true;
+  DOM.btnSendMessage.style.display = "none";
   DOM.btnSendMessage.classList.add("hidden");
+  DOM.btnStopStream.style.display = "flex";
   DOM.btnStopStream.classList.remove("hidden");
 
   state.abortController = new AbortController();
@@ -335,8 +346,10 @@ async function sendMessage() {
     }
   } finally {
     state.isGenerating = false;
-    DOM.btnSendMessage.classList.remove("hidden");
+    DOM.btnStopStream.style.display = "none";
     DOM.btnStopStream.classList.add("hidden");
+    DOM.btnSendMessage.style.display = "flex";
+    DOM.btnSendMessage.classList.remove("hidden");
   }
 }
 
@@ -562,8 +575,7 @@ function loadChat(chatId) {
 }
 
 DOM.btnNewChat.addEventListener("click", () => {
-  state.activeChatId = null;
-  location.reload();
+  startNewChat();
 });
 
 if (DOM.btnClearAllChatsTop) {
