@@ -2128,3 +2128,99 @@ body {
   font-weight: 800 !important;
 }
 
+
+/* ============================================================
+   UPGRADE: BLOCKQUOTES, TYPING INDICATOR & PRINT STYLES
+   ============================================================ */
+
+/* 5. Blockquotes (Versículos) */
+.message-bubble blockquote {
+  border-left: 4px solid var(--accent-gold);
+  background: rgba(212, 175, 55, 0.05);
+  margin: 14px 0;
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  font-family: var(--font-serif);
+  font-size: 1.05em;
+  font-style: italic;
+  color: #f3e5ab;
+  box-shadow: inset 2px 0 8px rgba(0,0,0,0.1);
+}
+
+.message-bubble blockquote p {
+  margin-bottom: 0 !important;
+}
+
+/* 4. Typing Indicator Animation */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+}
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-gold);
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; box-shadow: 0 0 6px var(--accent-gold); }
+}
+
+/* 3. Botão Copiar */
+.btn-bubble-copy {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+}
+.btn-bubble-copy:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* 3. Header Action (Print) */
+.btn-header-action {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-header-action:hover {
+  color: var(--text-main);
+  border-color: var(--accent-gold);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+/* Print Styles */
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .sidebar, .chat-input-wrapper, .chat-header, .bubble-actions, .welcome-screen { display: none !important; }
+  .app-layout { display: block !important; overflow: visible !important; height: auto !important; }
+  .chat-workspace { display: block !important; overflow: visible !important; height: auto !important; }
+  .messages-container { display: block !important; padding: 0 !important; overflow: visible !important; }
+  .message-bubble { 
+    background: transparent !important; 
+    border: none !important; 
+    box-shadow: none !important; 
+    color: #000 !important; 
+    margin-bottom: 20px !important;
+  }
+  .message-bubble blockquote {
+    background: #f9f9f9 !important;
+    border-left: 4px solid #666 !important;
+    color: #333 !important;
+  }
+}

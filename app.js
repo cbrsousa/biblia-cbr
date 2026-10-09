@@ -313,6 +313,7 @@ async function sendMessage() {
   DOM.userInput.style.height = "auto";
 
   const { row, bubble, contentDiv } = createAssistantMessageBubble();
+  contentDiv.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
   DOM.chatMessages.appendChild(row);
   scrollToBottom();
 
@@ -718,3 +719,9 @@ DOM.userInput.addEventListener("keydown", (e) => {
 });
 
 loadSavedChats();
+document.addEventListener('DOMContentLoaded', () => {
+  const btnPrint = document.getElementById('btnPrintStudy');
+  if(btnPrint) {
+    btnPrint.addEventListener('click', () => window.print());
+  }
+});
