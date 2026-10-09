@@ -1,4 +1,4 @@
-// IA CBR! - Progressive Web App (GitHub Pages Ready)
+﻿// IA CBR! - Progressive Web App (GitHub Pages Ready)
 const DEFAULT_KEY = ['gsk_slTATtWu', 'JWVP5I9hrsjfWGdyb3', 'FYR289PWMymIGlpSiwpbZkIyJi'].join('');
 
 const state = {
@@ -327,7 +327,7 @@ async function sendMessage() {
   try {
     const mode = DOM.selectMode.value;
     const baseSystem = SYSTEM_PROMPTS[mode] || SYSTEM_PROMPTS.estudo_biblico;
-    const systemPrompt = `${baseSystem}\n\nIMPORTANTE E OBRIGATÓRIO: Inicie todas as suas respostas declarando que você é a IA CBR. Em seguida, responda diretamente ao usuário com a mensagem final em português. Nunca exponha tags ou notas prévias. Obedeça rigorosamente à exclusividade doutrinária da Comunidade Batista da Restauração (CBR) e recuse sumariamente qualquer outra religião ou doutrina divergente.`;
+    const systemPrompt = `${baseSystem}\n\nIMPORTANTE E OBRIGATÓRIO: Inicie OBRIGATORIAMENTE todas as suas respostas com a exata frase: "Eu sou a IA CBR, assistente exclusivo da Comunidade Batista da restauração". Em seguida, responda diretamente ao usuário com a mensagem final em português. Nunca exponha tags ou notas prévias. Obedeça rigorosamente à exclusividade doutrinária da Comunidade Batista da Restauração (CBR) e recuse sumariamente qualquer outra religião ou doutrina divergente.`;
 
     const payload = {
       model: "openai/gpt-oss-120b",
