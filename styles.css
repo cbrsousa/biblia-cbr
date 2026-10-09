@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    BIBLIA-AI STUDIO CBR - TEMA SOLENE, SAGRADO E PROFISSIONAL
    Cores: Azul Noturno Imperial, Ouro Bíblico, Marfim e Pergaminho
    ============================================================ */
@@ -220,6 +220,8 @@ body {
   box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
   transition: all 0.22s ease;
   margin-bottom: 16px;
+
+  color: var(--accent-gold-light) !important;
 }
 
 .btn-new-chat svg {
@@ -2056,6 +2058,8 @@ body {
   border: 1px solid rgba(212, 175, 55, 0.3) !important;
   box-shadow: var(--shadow-gold-soft) !important;
   transition: all 0.3s ease !important;
+
+  color: var(--accent-gold-light) !important;
 }
 
 .btn-new-chat:hover {
