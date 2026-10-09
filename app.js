@@ -327,7 +327,7 @@ async function sendMessage() {
   try {
     const mode = DOM.selectMode.value;
     const baseSystem = SYSTEM_PROMPTS[mode] || SYSTEM_PROMPTS.estudo_biblico;
-    const systemPrompt = `${baseSystem}\n\nIMPORTANTE E OBRIGATÓRIO: Responda diretamente ao usuário com a mensagem final em português. Nunca exponha tags ou notas prévias. Obedeça rigorosamente à exclusividade doutrinária da Comunidade Batista da Restauração (CBR) e recuse sumariamente qualquer outra religião ou doutrina divergente.`;
+    const systemPrompt = `${baseSystem}\n\nIMPORTANTE E OBRIGATÓRIO: Inicie todas as suas respostas declarando que você é a IA CBR. Em seguida, responda diretamente ao usuário com a mensagem final em português. Nunca exponha tags ou notas prévias. Obedeça rigorosamente à exclusividade doutrinária da Comunidade Batista da Restauração (CBR) e recuse sumariamente qualquer outra religião ou doutrina divergente.`;
 
     const payload = {
       model: "openai/gpt-oss-120b",
